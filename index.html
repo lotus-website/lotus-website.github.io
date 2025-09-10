@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Multiple Affordance Guided Policy Optimization for Tool Manipulation Learning">
+  <meta name="keywords" content="Linear Temporal Logic, Reinforcement Learning, Manipulation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    Multiple Affordance Guided Policy Optimization for Tool Manipulation Learning
+  </title>
+
+  <style type="text/css">svg:not(:root).svg-inline--fa{overflow:visible}.svg-inline--fa{display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em}.svg-inline--fa.fa-lg{vertical-align:-.225em}.svg-inline--fa.fa-w-1{width:.0625em}.svg-inline--fa.fa-w-2{width:.125em}.svg-inline--fa.fa-w-3{width:.1875em}.svg-inline--fa.fa-w-4{width:.25em}.svg-inline--fa.fa-w-5{width:.3125em}.svg-inline--fa.fa-w-6{width:.375em}.svg-inline--fa.fa-w-7{width:.4375em}.svg-inline--fa.fa-w-8{width:.5em}.svg-inline--fa.fa-w-9{width:.5625em}.svg-inline--fa.fa-w-10{width:.625em}.svg-inline--fa.fa-w-11{width:.6875em}.svg-inline--fa.fa-w-12{width:.75em}.svg-inline--fa.fa-w-13{width:.8125em}.svg-inline--fa.fa-w-14{width:.875em}.svg-inline--fa.fa-w-15{width:.9375em}.svg-inline--fa.fa-w-16{width:1em}.svg-inline--fa.fa-w-17{width:1.0625em}.svg-inline--fa.fa-w-18{width:1.125em}.svg-inline--fa.fa-w-19{width:1.1875em}.svg-inline--fa.fa-w-20{width:1.25em}.svg-inline--fa.fa-pull-left{margin-right:.3em;width:auto}.svg-inline--fa.fa-pull-right{margin-left:.3em;width:auto}.svg-inline--fa.fa-border{height:1.5em}.svg-inline--fa.fa-li{width:2em}.svg-inline--fa.fa-fw{width:1.25em}.fa-layers svg.svg-inline--fa{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.fa-layers{display:inline-block;height:1em;position:relative;text-align:center;vertical-align:-.125em;width:1em}.fa-layers svg.svg-inline--fa{-webkit-transform-origin:center center;transform-origin:center center}.fa-layers-counter,.fa-layers-text{display:inline-block;position:absolute;text-align:center}.fa-layers-text{left:50%;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);-webkit-transform-origin:center center;transform-origin:center center}.fa-layers-counter{background-color:#ff253a;border-radius:1em;-webkit-box-sizing:border-box;box-sizing:border-box;color:#fff;height:1.5em;line-height:1;max-width:5em;min-width:1.5em;overflow:hidden;padding:.25em;right:0;text-overflow:ellipsis;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top right;transform-origin:top right}.fa-layers-bottom-right{bottom:0;right:0;top:auto;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:bottom right;transform-origin:bottom right}.fa-layers-bottom-left{bottom:0;left:0;right:auto;top:auto;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:bottom left;transform-origin:bottom left}.fa-layers-top-right{right:0;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top right;transform-origin:top right}.fa-layers-top-left{left:0;right:auto;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top left;transform-origin:top left}.fa-lg{font-size:1.3333333333em;line-height:.75em;vertical-align:-.0667em}.fa-xs{font-size:.75em}.fa-sm{font-size:.875em}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:2.5em;padding-left:0}.fa-ul>li{position:relative}.fa-li{left:-2em;position:absolute;text-align:center;width:2em;line-height:inherit}.fa-border{border:solid .08em #eee;border-radius:.1em;padding:.2em .25em .15em}.fa-pull-left{float:left}.fa-pull-right{float:right}.fa.fa-pull-left,.fab.fa-pull-left,.fal.fa-pull-left,.far.fa-pull-left,.fas.fa-pull-left{margin-right:.3em}.fa.fa-pull-right,.fab.fa-pull-right,.fal.fa-pull-right,.far.fa-pull-right,.fas.fa-pull-right{margin-left:.3em}.fa-spin{-webkit-animation:fa-spin 2s infinite linear;animation:fa-spin 2s infinite linear}.fa-pulse{-webkit-animation:fa-spin 1s infinite steps(8);animation:fa-spin 1s infinite steps(8)}@-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes fa-spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.fa-rotate-90{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.fa-rotate-180{-webkit-transform:rotate(180deg);transform:rotate(180deg)}.fa-rotate-270{-webkit-transform:rotate(270deg);transform:rotate(270deg)}.fa-flip-horizontal{-webkit-transform:scale(-1,1);transform:scale(-1,1)}.fa-flip-vertical{-webkit-transform:scale(1,-1);transform:scale(1,-1)}.fa-flip-both,.fa-flip-horizontal.fa-flip-vertical{-webkit-transform:scale(-1,-1);transform:scale(-1,-1)}:root .fa-flip-both,:root .fa-flip-horizontal,:root .fa-flip-vertical,:root .fa-rotate-180,:root .fa-rotate-270,:root .fa-rotate-90{-webkit-filter:none;filter:none}.fa-stack{display:inline-block;height:2em;position:relative;width:2.5em}.fa-stack-1x,.fa-stack-2x{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.svg-inline--fa.fa-stack-1x{height:1em;width:1.25em}.svg-inline--fa.fa-stack-2x{height:2em;width:2.5em}.fa-inverse{color:#fff}.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.sr-only-focusable:active,.sr-only-focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;width:auto}.svg-inline--fa .fa-primary{fill:var(--fa-primary-color,currentColor);opacity:1;opacity:var(--fa-primary-opacity,1)}.svg-inline--fa .fa-secondary{fill:var(--fa-secondary-color,currentColor);opacity:.4;opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-primary{opacity:.4;opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-secondary{opacity:1;opacity:var(--fa-primary-opacity,1)}.svg-inline--fa mask .fa-primary,.svg-inline--fa mask .fa-secondary{fill:#000}.fad.fa-inverse{color:#fff}</style><link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script defer="" src="./static/js/fontawesome.all.min.js"></script>
+<!--  <script src="./static/js/bulma-carousel.min.js"></script>-->
+  <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <link href="offcanvas.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+<!--   <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://chenbao.tech">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://touchdexterity.github.io/">
+            Rotating without Seeing
+          </a>
+          <a class="navbar-item" href="https://jianglongye.com/cgf/">
+            Continuous Grasping Function
+          </a>
+          <a class="navbar-item" href="https://yzqin.github.io/dexpoint/">
+            DexPoint
+          </a>
+          <a class="navbar-item" href="https://kristery.github.io/ILAD/">
+            DexAffordance
+          </a>
+          <a class="navbar-item" href="https://yzqin.github.io/dexmv/">
+            DexMV
+          </a>
+          <a class="navbar-item" href="https://yzqin.github.io/dex-teleop-imitation/">
+            DexTeleopImitation
+          </a>
+          <a class="navbar-item" href="https://people.eecs.berkeley.edu/~ilija/soil/">
+            SOIL
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"> <img src="images/lotus.jpeg" alt="Lotus Icon" style="height: 1em; vertical-align: middle; margin-right: 0.3em;"/>
+            LOTUS: Learning Universal Task Representations for Reinforcement Learning with Temporal Logic Guidance
+          </h1>
+          <!-- <h3 class="is-size-4">submitted to IROS 2024</h3> -->
+          <hr>
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://charlie0257.github.io/">Hao Zhang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a >Hao Wang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a >Xiucai Huang</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://staff.ustc.edu.cn/~zkan/">Zhen Kan</a><sup>1</sup>,
+            </span>
+          </div> -->
+
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Science and Technology of China,</span>
+            <span class="author-block"><sup>2</sup>Chongqing University</span>
+            <br>
+            <div class="is-size-6 publication-authors">
+              <span style="font-size: 0.9em;">*Equal Contribution</span><br>
+            </div>
+          </div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://agpo-website.github.io/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                  <a href="https://agpo-website.github.io/"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv (Coming Soon!)</span>
+                  </a>
+                </span>
+              
+
+              <!-- Video Link. -->
+                <!-- <span class="link-block">
+                  <a href="https://agpo-website.github.io/"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Simulation Video</span>
+                  </a>
+                </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://agpo-website.github.io/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon!)</span>
+                  </a>
+              </span>
+              <!-- Appendix Link. -->
+              <!-- <span class="link-block">
+                <a href="https://agpo-website.github.io/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Appendix</span>
+                  </a>
+              </span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    
+    <!-- Paper video. -->
+<!--     <div class="columns is-centered ">
+      <div class="column is-four-fifths">
+        <div class="teaser-video">
+          <video src="static/videos/teaser.mp4" autoplay muted loop playsinline></video>
+        </div>
+        <div class="zoomout-video">
+          <video src="static/videos/zoomout.mp4" autoplay muted loop playsinline></video>
+        </div>
+        <p>
+          We propose <b>DexArt</b>, a task suite of <b>Dex</b>terous manipulation with <b>Art</b>iculated object using point cloud observation.
+          We experiment with extensive benchmark methods that learn category-level manipulation policy on seen objects. We evaluate the
+          policies’ generalizability on a collection of unseen objects, as well as their robustness to camera viewpoint change.
+        </p>
+
+      </div>
+    </div> -->
+<!--     <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/V_EYQJO1W_U" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+        </div>
+      </div>
+    </div> -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Task guided agents demonstrate strong performance in a wide range of complex tasks. However, most existing task representation algorithms are tailored to specific contexts and struggle to generalize across diverse scenarios. Moreover, they typically depend on gradient signals from reinforcement learning controllers to update their weights, which can degrade both representation quality and learning efficiency. 
+          </p>
+          <p>
+            To overcome these limitations, we propose LOTUS, a temporal logic inspired universal task representation framework that can be seamlessly integrated into any RL algorithm to enhance agent performance across diverse task settings. Specifically, we design a novel task representation architecture capable of modeling relationships and extracting task semantics from LTL formulas. We further introduce a more effective update mechanism that treats the LTL encoder as a policy, thereby improving representation capacity. To enhance stability and robustness, LOTUS leverages the bisimulation metric, which provides theoretical guarantees for LTL representation, including behavioral equivalence, optimality fidelity, and trajectory robustness. 
+          </p>
+          <p>
+            Experimental results show that LOTUS outperforms most existing methods in learning efficiency, generalization capability, and representation quality. 
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column  is-four-fifths">
+        <h2 class="title is-3">Methods </h2>
+        <div class="content has-text-justified">
+          <img src="images/Outline2Framework.png">
+          <p>
+            <b>Overview.</b> The framework of LOTUS. 
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column  is-four-fifths">
+        <h2 class="title is-3">Simulation Results </h2>
+        <h3 class="subtitle is-4 has-text-weight-bold" style="margin-bottom: 0.1rem;">ZoneEnv</h3>
+        <div class="content has-text-justified" >
+         
+          <img src="images/ZoneEnv_sim/task_kind.png" alt="Result GIF" style="display: block; margin: 1em auto;"/>
+        </div>
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h3 class="subtitle is-4">Partilly-Ordered Task (I.I.D)</h3>
+          </div>
+          <div class="column has-text-centered">
+            <h3 class="subtitle is-4">Avoidance Task (I.I.D)</h3>
+          </div>
+        </div>
+
+        <div class="columns is-centered" >
+          <div class="column is-half has-text-centered">
+            <img src="images/ZoneEnv_sim/Zoneenv Even 1 3 1 2_cut 00_00_00-00_00_30~1.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+          <div class="column is-half has-text-centered">
+            <img src="images/ZoneEnv_sim/Zoneenv Until 1 2 1 1_cut 00_00_00-00_00_30.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h3 class="subtitle is-4">Partilly-Ordered Task (Depth<i class="fas fa-arrow-up"></i>)</h3>
+          </div>
+          <div class="column has-text-centered">
+            <h3 class="subtitle is-4">Avoidance Task (Depth<i class="fas fa-arrow-up"></i>)</h3>
+          </div>
+        </div>
+
+        <div class="columns is-centered" >
+          <div class="column is-half has-text-centered">
+            <img src="images/ZoneEnv_sim/Zoneenv Env 4 8 1 2_cut 00_00_00-00_00_30.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+          <div class="column is-half has-text-centered">
+            <img src="images/ZoneEnv_sim/Zoneenv Until 2 2 1 1_cut 00_00_00-00_00_30.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h3 class="subtitle is-4">Partilly-Ordered Task (Conjuncts<i class="fas fa-arrow-up"></i>)</h3>
+          </div>
+          <div class="column has-text-centered">
+            <h3 class="subtitle is-4">Avoidance Task (Conjuncts<i class="fas fa-arrow-up"></i>)</h3>
+          </div>
+        </div>
+
+        <div class="columns is-centered" >
+          <div class="column is-half has-text-centered">
+            <img src="images/ZoneEnv_sim/Zoneenv Env 4 8 1 2_cut 00_00_00-00_00_30.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+          <div class="column is-half has-text-centered">
+            <img src="images/ZoneEnv_sim/Zoneenv Until 2 2 1 1_cut 00_00_00-00_00_30.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+        </div>
+
+        <h3 class="subtitle is-4 has-text-weight-bold" style="margin-bottom: 0.1rem;">Robosuite</h3>
+        <div class="content has-text-justified" >
+         
+          <img src="images/maple_sim/skill2robosuite.jpeg" alt="Result GIF" style="width:100%; margin-top: 1em;"/>
+        </div>
+
+        <h3 class="subtitle is-4" style="margin-bottom: 0.5rem;">Robosuite-Stack</h3>
+        <div class="content has-text-justified" >
+          <!-- <video autoplay muted loop playsinline width="100%">
+            <source src="videos/maple_sim/stack_snapshot_final.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video> -->
+          <div class="columns is-centered" style="margin-top: 1em;">
+            <div class="column is-one-fifth has-text-centered">
+              <img src="images/maple_sim/stack_2.gif" alt="Result GIF" style="width:100%;"/>
+            </div>
+            <div class="column is-four-fifths has-text-centered">
+              <img src="images/maple_sim/stack_snapshot.png" alt="Result PNG" style="width:100%;"/>
+            </div>
+          </div>
+          <img src="images/maple_sim/stack.gif" alt="Result GIF" style="width:100%; margin-top: 1em;"/>
+        </div>
+
+        <h3 class="subtitle is-4">Robosuite-Nut Assembly</h3>
+        <div class="content has-text-justified">
+          <div class="columns is-centered" style="margin-top: 1em;">
+            <div class="column is-one-fifth has-text-centered">
+              <img src="images/maple_sim/nut_2.gif" alt="Result GIF" style="width:100%;"/>
+            </div>
+            <div class="column is-four-fifths has-text-centered">
+              <img src="images/maple_sim/nut_snapshot.png" alt="Result PNG" style="width:100%;"/>
+            </div>
+          </div>
+          <img src="images/maple_sim/nut_assemly.gif" alt="Result GIF" style="width:100%; margin-top: 1em;"/>
+        </div>
+
+        <h3 class="subtitle is-4">Robosuite-Cleanup</h3>
+        <div class="content has-text-justified">
+          <div class="columns is-centered" style="margin-top: 1em;">
+            <div class="column is-one-fifth has-text-centered">
+              <img src="images/maple_sim/cleanup_2.gif" alt="Result GIF" style="width:100%;"/>
+            </div>
+            <div class="column is-four-fifths has-text-centered">
+              <img src="images/maple_sim/cleanup_snapshot.png" alt="Result PNG" style="width:100%;"/>
+            </div>
+          </div>
+          <img src="images/maple_sim/cleanup.gif" alt="Result GIF" style="width:100%; margin-top: 1em;"/>
+        </div>
+
+        <h3 class="subtitle is-4">Robosuite-Peg Insertion</h3>
+        <div class="content has-text-justified">
+          <div class="columns is-centered" style="margin-top: 1em;">
+            <div class="column is-one-fifth has-text-centered">
+              <img src="images/maple_sim/peg_2.gif" alt="Result GIF" style="width:100%;"/>
+            </div>
+            <div class="column is-four-fifths has-text-centered">
+              <img src="images/maple_sim/peg_insert_snapshot.png" alt="Result PNG" style="width:100%;"/>
+            </div>
+          </div>
+          <img src="images/maple_sim/peg_insertion.gif" alt="Result GIF" style="width:100%; margin-top: 1em;"/>
+          
+        </div>
+
+        <h3 class="subtitle is-4 has-text-weight-bold" style="margin-bottom: 0.1rem;">DexArt</h3>
+        <div class="content has-text-justified" >
+         
+          <img src="images/DexArt_sim/skill2DexArt.jpeg" alt="Result GIF" style="width:100%; margin-top: 1em;"/>
+        </div>
+
+        <h3 class="subtitle is-4" style="margin-bottom: 0.1rem;">Toilet</h3>
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h3 class="subtitle is-4">Seen</h3>
+          </div>
+          <div class="column has-text-centered">
+            <h3 class="subtitle is-4">Unseen</h3>
+          </div>
+        </div>
+        <div class="columns is-centered" >
+          <div class="column is-half has-text-centered">
+            <img src="images/DexArt_sim/Toilet_False.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+          <div class="column is-half has-text-centered">
+            <img src="images/DexArt_sim/Toilet_True.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+        </div>
+
+        <h2 class="title is-3">Real-world Performance </h2>
+        <h3 class="subtitle is-4" style="margin-bottom: 0.01drem;">Stack</h3>
+        <div class="content has-text-justified"></div>
+        <img src="images/maple_sim2real/S2R_snapshot_stack.png" alt="Result GIF" style="width:100%; margin-top: 1em;"/>
+        <div class="columns is-centered" style="margin-top: 1em;">
+          <div class="column is-half has-text-centered">
+            <img src="images/maple_sim2real/stack_0.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+          <div class="column is-half has-text-centered">
+            <img src="images/maple_sim2real/stack_1.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+        </div>
+
+        <h3 class="subtitle is-4" style="margin-bottom: 0.1rem;">Cleanup</h3>
+        <img src="images/maple_sim2real/S2R_snapshot_cleanup.png" alt="Result GIF" style="width:100%; margin-top: 1em;"/>
+        <div class="content has-text-justified"></div>
+        <!-- <img src="images/maple_sim2real/stack_0.gif" alt="Result GIF" style="width:100%; margin-top: 1em;"/>
+        <img src="images/maple_sim2real/stack_1.gif" alt="Result GIF" style="width:100%; margin-top: 1em;"/> -->
+        <div class="columns is-centered" style="margin-top: 1em;">
+          <div class="column is-half has-text-centered">
+            <img src="images/maple_sim2real/cleanup_0.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+          <div class="column is-half has-text-centered">
+            <img src="images/maple_sim2real/cleanup_1.gif" alt="Result GIF" style="width:100%;"/>
+          </div>
+        </div>
+
+        <h2 class="title is-3">Appendix</h2>
+        <h3 class="subtitle is-4" style="margin-bottom: 0.01drem;">The Descriptions of LTL Specifications in Trajectory Visualization </h3>
+        <div class="content has-text-justified">
+          <img src="images/ZoneEnv_sim/task_description.png">
+        </div>
+        </div>
+
+      </div>
+
+      </div>
+    </div>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+<!-- @inproceedings{
+    bao2023dexart,
+    title={Exploiting Hybrid Policy in Reinforcement Learning for Interpretable Temporal Logic Manipulation},
+    author={Chen Bao and Helin Xu and Yuzhe Qin and Xiaolong Wang},
+    booktitle={Conference on Computer Vision and Pattern Recognition 2023},
+    year={2023},
+    url={https://openreview.net/forum?id=v-KQONFyeKp}
+} -->
+    </code></pre>
+  </div>
+  <div class="content has-text-centered">
+    <p>
+      This website template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>
+    </p>
+  </div>
+</section>
+
+
+
+<script>
+  bulmaCarousel.attach('#results-carousel', {
+    slidesToScroll: 1,
+    slidesToShow: 2,
+    infinite: true,
+    autoplay: true,
+  });
+</script>
+</body>
+</html>
