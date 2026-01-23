@@ -253,6 +253,40 @@
           <img src="images/ZoneEnv_sim/task_kind.png" alt="Result GIF" style="display: block; margin: 1em auto;"/>
           <p>
             In ZoneEnv and LetterWorld scenarios, we sample different LTL tasks from the same multi-task distribution in every episode. For example, the sampled task can be $\lozenge(\mathrm{Black}\wedge\lozenge(\mathrm{White}\wedge\lozenge\mathrm{Red}))$ when the agent perfoming "Eventually_1_3_1_2", where "Eventually" means the task kind, "1_3" means the interval of subgoal depth can be sampled, and "1_2" is the interval of task conjuncts can be sampled.
+            <p style="margin: 0 0 15px 0; font-weight: 500;">I. Definition of the label format: In "Eventually_1_3_1_2", each part has the following meaning:</p>
+            <ol style="margin: 0; padding-left: 20px;">
+              <li style="margin-bottom: 12px;">
+                <strong>"Eventually"</strong>: Indicates the task type is "eventually-achieved" (corresponding to the ◇ operator in LTL), meaning the agent only needs to satisfy the target condition at some point in the trajectory, without maintaining it continuously.
+              </li>
+              <li style="margin-bottom: 12px;">
+                <strong>"1_3"</strong>: Represents the sampling interval of subgoal depth, i.e., the number of nested subgoal layers of this type of task will be randomly generated between 1 and 3. For example:
+                <ul style="margin: 8px 0 0 20px; padding: 0;">
+                  <li>Depth 1: Only a single goal needs to be achieved (e.g., "eventually grasp the red cube");</li>
+                  <li>Depth 2: Subgoal A must be achieved first, then goal B (e.g., "eventually push the box to the designated area, and eventually grasp the cup");</li>
+                  <li>Depth 3: Subgoal A → Subgoal B → Goal C must be achieved in sequence (e.g., "eventually approach the table, and eventually pick up the tool, and eventually complete the assembly").</li>
+                </ul>
+              </li>
+              <li style="margin-bottom: 0;">
+                <strong>"1_2"</strong>: Represents the sampling interval of the number of task conjuncts, i.e., the number of parallel goals included in this type of task will be randomly generated between 1 and 2 (corresponding to the ∧ operator in LTL). For example:
+                <ul style="margin: 8px 0 0 20px; padding: 0;">
+                  <li>1 conjunct: A single parallel goal (e.g., "eventually turn on the faucet");</li>
+                  <li>2 conjuncts: Two parallel goals must be satisfied simultaneously (e.g., "eventually turn on the faucet, and eventually close the valve").</li>
+                </ul>
+              </li>
+            </ol>
+
+            <p style="margin: 0 0 15px 0; font-weight: 500;">II. Explanation of task setting labels in the tables:</p>
+              <ol style="margin: 0; padding-left: 20px;">
+                <li style="margin-bottom: 12px;">
+                  <strong>i.i.d (Independent and Identically Distributed)</strong>: Indicates "independent and identically distributed" task setting. Test tasks follow the same distribution as training tasks, with subgoal depth and number of conjuncts within the regular range during training (e.g., the above "1_3" and "1_2" intervals), used to verify basic generalization ability.
+                </li>
+                <li style="margin-bottom: 12px;">
+                  <strong>Depth (￪)</strong>: Indicates "subgoal depth enhancement" setting, where "￪" denotes increased depth values (exceeding the regular interval during training), used to verify the algorithm's generalization ability in more complex nested tasks. For example, if the training depth interval is 1_3, the test interval may extend to 4_6, requiring the agent to handle more hierarchical subgoal dependencies.
+                </li>
+                <li style="margin-bottom: 0;">
+                  <strong>Conjuncts (￪)</strong>: Indicates "number of conjuncts enhancement" setting, where "￪" denotes an increased number of conjuncts (exceeding the regular interval during training), used to verify the algorithm's generalization ability in scenarios with multiple parallel goals. For example, if the training conjunct interval is 1_2, the test interval may extend to 3_4, requiring the agent to satisfy more parallel target conditions simultaneously.
+                </li>
+              </ol>
           </p>
         </div>
         <div class="columns is-centered">
@@ -496,6 +530,14 @@
         </p>
 
         <h2 class="title is-3">Appendix</h2>
+        <h3 class="subtitle is-4" style="margin-bottom: 0.01drem;">Symbol Apointment </h3>
+        <div class="content has-text-justified">
+          <img src="images/Symbol_Appointment.png">
+        </div>
+        <h3 class="subtitle is-4" style="margin-bottom: 0.01drem;">Task Scenarios, task description and corresponding LTL formulas in Example </h3>
+        <div class="content has-text-justified">
+          <img src="images/task_descriotion.jpeg">
+        </div>
         <h3 class="subtitle is-4" style="margin-bottom: 0.01drem;">The Descriptions of LTL Specifications in Trajectory Visualization </h3>
         <div class="content has-text-justified">
           <img src="images/ZoneEnv_sim/task_description.png">
